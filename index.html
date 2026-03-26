@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<title>Signal Saver - Ultra Advanced Backup Router</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
+
+<style>
+/* === Reset === */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.5;
+  background: #0f0c29;
+  color: #f0f0f5;
+  min-height: 100vh;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+/* === Navigation === */
+nav {
+  position: sticky;
+  top: 0;
+  background: rgba(20, 10, 40, 0.85);
+  backdrop-filter: blur(12px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 5vw;
+  z-index: 999;
+  box-shadow: 0 4px 15px rgba(255, 0, 204, 0.25);
+}
+nav img {
+  height: 48px;
+  filter: drop-shadow(0 0 12px #ff00cc);
+  transition: transform 0.3s;
+}
+nav img:hover {
+  transform: scale(1.15);
+}
+.nav-links {
+  display: flex;
+  gap: 2rem;
+}
+.nav-links a {
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 6px 8px;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+.nav-links a:hover {
+  background: rgba(255, 0, 204, 0.15);
+}
+
+/* Hamburger menu styling */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  width: 26px;
+  height: 22px;
+  cursor: pointer;
+  z-index: 1100;
+}
+.hamburger span {
+  background: #ff00cc;
+  height: 3px;
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+.hamburger.active span:nth-child(1) {
+  transform: translateY(9px) rotate(45deg);
+}
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.active span:nth-child(3) {
+  transform: translateY(-9px) rotate(-45deg);
+}
+
+/* === Mobile Navigation === */
+@media (max-width: 768px) {
+  .nav-links {
+    position: fixed;
+    top: 60px;
+    right: 0;
+    background: rgba(20, 10, 40, 0.97);
+    height: calc(100vh - 60px);
+    width: 250px;
+    flex-direction: column;
+    padding: 2rem;
+    gap: 2rem;
+    transform: translateX(100%);
+    transition: transform 0.4s ease-in-out;
+    box-shadow: -5px 0 30px rgba(255, 0, 204, 0.6);
+    z-index: 1000;
+  }
+  .nav-links.open {
+    transform: translateX(0);
+  }
+  .hamburger {
+    display: flex;
+  }
+  .nav-links a {
+    font-size: 1.3rem;
+    padding: 10px 0;
+  }
+}
+
+/* === Hero === */
+.hero {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6rem 5vw;
+  gap: 2rem;
+  background: linear-gradient(135deg, #1a0a3a, #330066);
+  position: relative;
+  overflow: hidden;
+  border-radius: 0 0 40px 40px;
+}
+.hero:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('https://i.ibb.co/k6P2T7Y/particles.png') repeat;
+  opacity: 0.05;
+  z-index: 0;
+}
+.hero-text {
+  flex: 1 1 400px;
+  min-width: 280px;
+  z-index: 1;
+}
+.hero-text h1 {
+  font-size: 3.5rem;
+  background: linear-gradient(90deg, #ff00cc, #3333ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 1rem;
+  animation: gradientShift 5s ease infinite alternate;
+}
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+.hero-text p {
+  font-size: 1.2rem;
+  color: #eaeaffdd;
+  margin-bottom: 1.5rem;
+}
+.hero-logo {
+  flex: 0 0 140px;
+  filter: drop-shadow(0 0 25px #ff00cc);
+  animation: float 4s ease-in-out infinite;
+  z-index: 1;
+  transition: transform 0.3s;
+}
+.hero-logo:hover {
+  transform: scale(1.15) rotate(-3deg);
+}
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+/* Buy button */
+.hero-text button {
+  cursor: not-allowed;
+  border: none;
+  border-radius: 30px;
+  padding: 12px 28px;
+  background: linear-gradient(90deg, #ff00cc, #3333ff);
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(255, 0, 204, 0.5);
+  transition: all 0.3s;
+  opacity: 0.5;
+}
+.hero-text button:hover {
+  background: linear-gradient(90deg, #ff00cc, #5555ff);
+  box-shadow: 0 6px 20px rgba(255, 51, 221, 0.7);
+  transform: none;
+}
+
+/* Status Monitor */
+.status-monitor {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 28px 30px;
+  border-radius: 22px;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 0 30px #ff00cc88;
+  color: #f0d9ff;
+  font-weight: 600;
+  max-width: 280px;
+  animation: glowPulse 3s infinite alternate;
+  z-index: 1;
+}
+@keyframes glowPulse {
+  0% {
+    box-shadow: 0 0 20px #ff00cc88;
+  }
+  100% {
+    box-shadow: 0 0 40px #ff33ccaa;
+  }
+}
+.status-monitor h3 {
+  text-align: center;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+.status-monitor p {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 8px 0;
+}
+.live-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: limegreen;
+  display: inline-block;
+  animation: pulse 2.5s infinite;
+  margin-left: 8px;
+}
+@keyframes pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 8px limegreen;
+  }
+  50% {
+    box-shadow: 0 0 22px limegreen;
+  }
+}
+
+/* Features */
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2.5rem;
+  padding: 5rem 5vw;
+}
+.feature-card {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 30px 24px;
+  border-radius: 25px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: #e0cdfa;
+  transition: transform 0.4s, box-shadow 0.4s;
+  cursor: pointer;
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+.feature-card:hover {
+  transform: rotateY(10deg) scale(1.05);
+  box-shadow: 0 0 40px #ff33ccaa;
+}
+
+/* Pricing */
+.pricing {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2.8rem;
+  padding: 4rem 5vw;
+}
+.price-card {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 28px;
+  padding: 2.5rem 2.8rem;
+  max-width: 280px;
+  box-shadow: 0 0 25px #ff00cc77;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-weight: 700;
+  transition: transform 0.4s, box-shadow 0.4s;
+}
+.price-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 50px #ff33ccbb;
+}
+.price-card h1 {
+  font-size: 2.8rem;
+  background: linear-gradient(90deg, #ff00cc, #3333ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.best-value {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: #ff00cc;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-weight: 700;
+  color: white;
+  font-size: 0.85rem;
+  transform: rotate(10deg);
+}
+
+/* FAQ */
+.faq {
+  padding: 5rem 5vw;
+  max-width: 720px;
+  margin: 0 auto;
+}
+.faq h2 {
+  text-align: center;
+  font-size: 2.8rem;
+  margin-bottom: 2rem;
+  font-weight: 700;
+  color: #ff99e6;
+  text-shadow: 0 0 6px #ff00ccaa;
+}
+.faq-question {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  padding: 18px 25px;
+  margin-bottom: 12px;
+  font-weight: 600;
+  font-size: 1.15rem;
+  cursor: pointer;
+  position: relative;
+  transition: background 0.3s;
+}
+.faq-question:hover {
+  background: rgba(255, 0, 204, 0.2);
+}
+.faq-question::after {
+  content: '+';
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.6rem;
+  color: #ff00ccdd;
+  transition: transform 0.3s;
+}
+.faq-question[aria-expanded='true']::after {
+  content: '−';
+  color: #ff33ccee;
+}
+.faq-answer {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 0 0 14px 14px;
+  padding: 16px 25px;
+  margin-top: -8px;
+  margin-bottom: 1.3rem;
+  display: none;
+  color: #d8bfff;
+  animation: fadeIn 0.4s ease forwards;
+}
+.faq-answer.show {
+  display: block;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Contact */
+.contact {
+  padding: 4rem 5vw;
+  text-align: center;
+  color: #f2dfff;
+  max-width: 720px;
+  margin: 0 auto 3rem;
+}
+.contact h2 {
+  font-size: 2.6rem;
+  margin-bottom: 1.4rem;
+  text-shadow: 0 0 6px #ff00ccbb;
+  font-weight: 700;
+}
+.contact p {
+  font-size: 1.15rem;
+  margin: 0.4rem 0;
+  letter-spacing: 0.03em;
+}
+.contact a {
+  font-weight: 600;
+  transition: color 0.3s;
+}
+.contact a:hover {
+  color: #ff66cc;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 1.8rem 1rem;
+  background: rgba(20, 10, 40, 0.95);
+  font-weight: 500;
+  color: #bb99cccc;
+  font-size: 0.9rem;
+  box-shadow: inset 0 3px 15px #ff00cc33;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero {
+    flex-direction: column;
+    padding: 4rem 5vw;
+  }
+  .hero-text h1 {
+    font-size: 2.8rem;
+  }
+  .hero-text p {
+    font-size: 1.1rem;
+  }
+  .feature-card {
+    font-size: 1.1rem;
+  }
+  .price-card h1 {
+    font-size: 2.2rem;
+  }
+  .price-card h2 {
+    font-size: 1.4rem;
+  }
+  .faq h2 {
+    font-size: 2rem;
+  }
+  .faq-question {
+    font-size: 1.1rem;
+    padding: 15px 20px;
+  }
+  .faq-answer {
+    font-size: 0.95rem;
+    padding: 14px 20px;
+  }
+  .contact h2 {
+    font-size: 2rem;
+  }
+  .contact p {
+    font-size: 1rem;
+  }
+}
+@media (max-width: 400px) {
+  .hero {
+    padding: 3rem 4vw;
+  }
+  .hero-logo {
+    margin-bottom: 1.8rem;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero"><img src="logo.png" alt="Signal Saver Logo" /></a>
+  <div class="nav-links" id="nav-links">
+    <a href="#features">Features</a>
+    <a href="#pricing">Fees</a>
+    <a href="#faq">FAQ</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <button
+    class="hamburger"
+    id="hamburger"
+    aria-label="Toggle menu"
+    aria-expanded="false"
+  >
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-text">
+    <h1>Never Lose Internet Again</h1>
+    <p>Signal Saver automatically switches to backup internet instantly.</p>
+    <button disabled>Buy Now</button>
+  </div>
+  <img src="logo.png" alt="Signal Saver Logo" class="hero-logo" />
+  <div class="status-monitor" aria-live="polite">
+    <h3>Status Monitor</h3>
+    <p>Main: <span id="main">Connected ✅</span></p>
+    <p>Backup: <span id="backup">Standby</span></p>
+    <div><span class="live-dot"></span> Live system</div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="feature-card">⚡ Instant Switch</div>
+  <div class="feature-card">📡 Dual Internet</div>
+  <div class="feature-card">🔒 Secure</div>
+  <div class="feature-card">📱 Easy Control</div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="price-card">
+    <h2>Basic</h2>
+    <h1>£29</h1>
+    <button disabled>Buy</button>
+  </div>
+  <div class="price-card" style="position: relative;">
+    <div class="best-value">Best Value</div>
+    <h2>Pro</h2>
+    <h1>£59</h1>
+    <button disabled>Buy</button>
+  </div>
+  <div class="price-card">
+    <h2>Elite</h2>
+    <h1>£99</h1>
+    <button disabled>Buy</button>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <h2>FAQ</h2>
+  <div class="faq-question" aria-expanded="false">How fast is it?</div>
+  <div class="faq-answer">Less than 1 second switching.</div>
+  <div class="faq-question" aria-expanded="false">Does it support 5G?</div>
+  <div class="faq-answer">Yes, fully supported.</div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <h2>Contact Us</h2>
+  <p>Phone: <a href="tel:+447865823410">07865 823410</a></p>
+  <p>Email: <a href="mailto:zylogt0@gmail.com">zylogt0@gmail.com</a></p>
+</section>
+
+<!-- FOOTER -->
+<footer>© 2026 Signal Saver</footer>
+
+<script>
+// Hamburger toggle
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.getElementById('nav-links');
+
+hamburger.addEventListener('click', () => {
+  const expanded = hamburger.getAttribute('aria-expanded') === 'true';
+  hamburger.setAttribute('aria-expanded', !expanded);
+  hamburger.classList.toggle('active');
+  navLinks.classList.toggle('open');
+});
+
+// FAQ toggle
+document.querySelectorAll('.faq-question').forEach((question) => {
+  question.addEventListener('click', () => {
+    const expanded = question.getAttribute('aria-expanded') === 'true';
+    question.setAttribute('aria-expanded', !expanded);
+    const answer = question.nextElementSibling;
+    if (!expanded) {
+      answer.classList.add('show');
+    } else {
+      answer.classList.remove('show');
+    }
+  });
+});
+</script>
+
+</body>
+</html>
